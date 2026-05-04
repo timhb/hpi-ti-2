@@ -8,7 +8,7 @@
 #show: template.with(
   names: [Tim Beier, Simon Bachran, Sven Luca Hafemann],
   week: week,
-  course: "Theoretische Informatik I"
+  course: "Theoretische Informatik II"
 )
 
 Wir zeigen zunächst die Aussage:\
