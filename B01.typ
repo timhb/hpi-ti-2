@@ -3,12 +3,15 @@
 
 #set enum(numbering: "a)")
 #set text(lang: "de")
-#let week = 2
+#let week = 1
+
+#let qed = [#h(1fr) $square$]
 
 #show: template.with(
   names: [Tim Beier, Simon Bachran, Sven Luca Hafemann],
   week: week,
-  course: "Theoretische Informatik I"
+  course: "Bonus Theoretische Informatik II",
+  semester: "Sommersemester 2026"
 )
 
 Wir zeigen zunächst die Aussage:\
@@ -107,14 +110,14 @@ Im Folgenden beschreiben wir einen ALgorithmus, der einen Eulerkreis in einem Gr
 
 
 *Eingabe:*
-  flusskonsistenter, zusammenhängender gerichteter Graph $G = (V, E)$ in Form einer Adjazenzliste. .
+  Ein flusskonsistenter, zusammenhängender gerichteter Graph $G = (V, E)$ in Form einer Adjazenzliste.
 
 *Ausgabe:*
   Ein Eulerkreis auf $G$ als Folge von Knoten $(v_1, v_2, ..., v_k)$.
 
 *Korrektheitsbedingung:*
   Es muss gelten: \
-  ${(v_i, v_(i+1)) | i = 1, 2, ..., k} = E$ $space$ (Alle Kanten werden genau einmal abgelaufen) \
+  ${(v_i, v_(i+1)) | i = 1, 2, ..., k} = E$ mit $|E| = k$ $space$ (Alle Kanten werden genau einmal abgelaufen) \
   $v_1 = v_k$ $space$ (Der Pfad ist ein Kreis)
 
 *Algorithmus:*\
@@ -128,8 +131,8 @@ Im Folgenden beschreiben wir einen ALgorithmus, der einen Eulerkreis in einem Gr
   Für alle Knoten $v_i$ in $P$ speichern wir uns ihr erstes Vorkommen in $P$.\
   Die Zyklen, die Knoten von $P$ enthalten, speichern wir uns separat in einer Liste $L$.\
   Analog zu unserem Beweis wollen wir jetzt die Zyklen zusammensetzen. Per Konstruktion können wir zu jedem Schritt einen Zyklus $C_j$ aus $L$ auswählen, der sich einen Knoten mit $P$ teilt. (dieser existiert, da $G$ zusammenhängend ist).\
-  Dann können wir $C_j$ zyklisch verschieben und in $P$ an geeigneter Stelle einfügen.\ 
-  Per Konstruktion erhalten wir so nach $k$ Iterationen einen Eulerzyklus $P$.
+  Dann können wir $C_j$ zyklisch verschieben und in $P$ an geeigneter Stelle einfügen. Daraufhin aktualisieren wir $L$, da nun potentiell neue Knoten in $P$ vorkommen, somit auch potentiell weitere Zyklen, die sich Knoten mit $P$ teilen. \ 
+  Per Konstruktion erhalten wir so nach $k$ Iterationen einen Eulerzyklus $P$. #qed
 
 *Laufzeit:*\
   Der Algorithmus hat Laufzeit $cal(O)(|E|)$.\
@@ -143,6 +146,6 @@ Im Folgenden beschreiben wir einen ALgorithmus, der einen Eulerkreis in einem Gr
   Diese Operationen werden ebenfalls armotisiert $cal(O)(|E|)$ mal ausgeführt, da sie pro Knoten im Eulerzyklus (also pro Kante) ausgeführt werden.\
   Jeder Zyklus wird dann um maximal seine Länge zyklisch verschoben und an den vorberechneten Index eingefügt, was wieder in amortisiert $cal(O)(|E|)$ Zeit geschieht.\
   \
-  Um ein Indexweise Einfügen zu ermöglichen, verwenden wir für die konkrete Implementierung eine Linked List für die Darstellung von $P$, wobei wir uns für jeden Knoten in einem Array speichern, welches Element (Referenz) der Linked List einem Vorkommen des Knoten entspricht.\  
+  Um ein indexweise Einfügen zu ermöglichen, verwenden wir für die konkrete Implementierung eine Linked List für die Darstellung von $P$, wobei wir uns für jeden Knoten in einem Array speichern, welches Element (Referenz) der Linked List einem Vorkommen des Knoten entspricht.\  
 
   
