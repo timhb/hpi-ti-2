@@ -44,7 +44,7 @@
       #if here().page() != 1 [
         #course
         #h(1fr)
-        Übungsblatt #week – Theoretische Informatik I
+        Übungsblatt #week – #course
         // #datetime.today().display("[day].[month].[year]")
         // #h(1fr)
         #v(-.5em)
@@ -56,7 +56,7 @@
 
   align(center, rect(inset:   1em)[
     #names #h(1fr) #semester \
-    #align(center)[#text(size: 20pt, weight: 600)[Übungsblatt #week - Theoretische Informatik I]]
+    #align(center)[#text(size: 20pt, weight: 600)[Übungsblatt #week - #course]]
     #v(1em)
   ])
 
