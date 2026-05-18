@@ -41,7 +41,7 @@
   setzen, und somit
   $ f((v, w)) + f((v, w)) <= c({v,w}) $
   einhalten. #qed
-
+  #colbreak()
 +
   #let (va, vb) = ($v_{"in"}$, $v_{"out"}$)
   Sei $G = (V, E, c)$ das ungerichtete Flussnetzwerk aus (a), wobei zusätzlich für die Kapazitätsfunktion $c: V union E -> NN$ gilt, wir also zusätzlich auch Knotenkapazitäten gegeben haben. \
@@ -59,7 +59,7 @@
   $ 0 <= f'^-(va)) = f'^+(vb) <= c'(va, vb) = c(v) quad "für alle " v in V $
   Somit ist der Fluss durch einen Knoten $v in V$ begrenzt durch die in $G$ angegebene Knotenkapazität. \
   Haben wir einen maximum Fluss in $G'$ gefunden, so lässt sich dieser einfach nach $G$ übersetzen, indem Knoten $va$ und $vb$ zu $v in V$ kontrahiert werden. #qed
-
+  #colbreak()
 + 
   _Wir nutzen weiterhin Definitionen aus den vorherigen Aufgaben._
   Sei $G = (V, E, c, b)$ ein gerichtetes Flussnetzwerk mit $b: V -> ZZ$. Es soll nun entschieden werden ob ein Fluss $f$ in $G$ existiert für den für alle Knoten gilt:
@@ -85,7 +85,7 @@
   $ f'^-(v) - f'^+(v) = 0 = b(v) $
   Da $G$ dem induzierten Teilgraphen $G' - {s, t}$ entspricht, wodurch die Ungleichung stimmt ist der Bedarf für jeden Knoten $v in V$ erfüllt. \
   Ist der maximum Fluss nicht gesättigt so stimmt der Bedarf für jeden Knoten $v in V$ nicht, da es ein $f'((s,v))!= -b(v) $ oder $f'((v,t)) != b(v)$ geben muss und somit die obigen Gleichungen nicht erfüllt wären. #qed
-
+  #colbreak()
 + 
   #let (ca, cb) = ($c_(min)$, $c_(max)$)
   _Der Einfachkeit halber nutzen wie Bedarfsfunktion $b$ als abstrakte Funktion und gehen nicht auf die konkrete Implementierung ein. Sei $ca = u$ ._\
@@ -124,3 +124,101 @@
 #pagebreak()
 
 #exercise[5 Punkte, Beweisaufgabe][]
+
+Sei $f'$ der Fluss $f$, der entlang des augmentierenden Flusspfads $P$ augmentiert wird. Zeige, dass $f'$ die Flusserhaltung erfüllt.
+
+*Lösung:*
+
+Sei $x in V \\ {s,t}$ ein beliebiger Zwischenknoten.
+
+*Fall 1: $x$ liegt nicht auf dem augmentierenden Pfad $P$:*
+
+Dann werden keine inzidenten Kanten von $x$ verändert. Da für $f$ die Flusserhaltung gilt, gilt also auch weiterhin:
+
+$ sum_(e in E^"in"_x) f'(e) = sum_(e in E^"in"_x) f(e) = sum_(e in E^"out"_x) f(e) = sum_(e in E^"out"_x) f'(e). $
+
+
+*Fall 2: $x$ liegt auf dem augmentierenden Pfad $P$:*
+
+Da $x in.not {s,t}$, muss $x$ dann ein innerer Knoten von $P$ sein. Es gibt
+also $u,v in V$, welche jeweils die Vor- bzw. Nachgänger von $x$ auf $P$ sind,
+sodass also gilt $(u,x), (x,v) in P$. Da $P$ ein Pfad ist, liegen alle zu $x$
+inzidenten Knoten außer $u,v$ nicht auf $P$.
+
+Beim Augmentieren wird auf beiden Kanten der Fluss um denselben Wert $Delta =
+"bottleneck"(P)$ erhöht oder verringert, je nachdem ob $(u,x)$ und $(x,v)$
+Vorwärts- oder Rückwärtskanten sind.
+
+*Fall 2.1: $(u,x)$ und $(x,v)$ sind Vorwärtskanten in $G_f$*
+
+Dann gilt per Definition der Flussaugmentierung, dass $f'(u,x) = f(u,x) +
+Delta$. Also gilt:
+
+$ sum_(e in E^"in"_x) f'(e) = (sum_(e in E^"in"_x \\ {(u,x)}) f'(e)) + f'(u,x)
+= (sum_(e in E^"in"_x \\ {(u,x)}) f(e)) + f(u,x) + Delta = sum_(e in E^"in"_x)
+f(e) + Delta. $
+
+Analog gilt $f'(x,v) = f(x,v) + Delta$ und somit:
+
+$ sum_(e in E^"out"_x) f'(e) = sum_(e in E^"out"_x) f(e) + Delta. $
+
+Demnach gilt:
+
+$ sum_(e in E^"in"_x) f'(e) = sum_(e in E^"in"_x) f(e) + Delta = sum_(e in
+E^"out"_x) f(e) + Delta = sum_(e in E^"out"_x) f'(e). $
+
+*Fall 2.2: $(u,x)$ und $(x,v)$ sind Rückwärtskanten:*
+
+Dann gilt per Definition der Flussaugmentierung, dass $f'(x,u) = f(x,u) -
+Delta$. Also gilt:
+
+$ sum_(e in E^"out"_x) f'(e) = (sum_(e in E^"out"_x \\ {(x,u)}) f'(e)) + f'(x,u)
+= (sum_(e in E^"out"_x \\ {(x,u)}) f(e)) + f(x,u) - Delta = sum_(e in E^"out"_x)
+f(e) - Delta. $
+
+Analog gilt $f'(v,x) = f(v,x) - Delta$ und somit:
+
+$ sum_(e in E^"in"_x) f'(e) = sum_(e in E^"in"_x) f(e) - Delta. $
+
+Demnach gilt:
+
+$ sum_(e in E^"in"_x) f'(e) = sum_(e in E^"in"_x) f(e) - Delta = sum_(e in
+E^"out"_x) f(e) - Delta = sum_(e in E^"out"_x) f'(e). $
+
+*Fall 2.3: $(u,x)$ ist eine Vorwärtskante, $(x,v)$ eine Rückwärtskante:*
+
+Es gilt wie in 2.1 gezeigt, dass $f'(u,x) = f(u,x) + Delta$.
+
+Außerdem gilt wie in 2.2 gezeigt $f'(v,x) = f(v,x) - Delta$.
+
+Da $(u,x)$ und $(v,x)$ beide eingehende Kanten sind und die einzigen
+veränderten Kanten inzident zu $x$ sind, gilt also:
+
+$ sum_(e in E^"in"_x) f'(e) = sum_(e in E^"in"_x) f(e) + Delta - Delta = sum_(e
+in E^"in"_x) f(e). $
+
+Da es keine Flussänderung durch $P$ bei ausgehenden Kanten gibt, gilt somit:
+
+$ sum_(e in E^"in"_x) f'(e) = sum_(e in E^"in"_x) f(e) = sum_(e in E^"out"_x)
+f(e) = sum_(e in E^"out"_x) f'(e). $
+
+*Fall 2.4: $(u,x)$ ist eine Rückwärtskante, $(x,v)$ eine Vorwärtskante:*
+
+Es gilt wie in 2.2 gezeigt $f'(x,u) = f(x,u) - Delta$.
+
+Außerdem gilt wie in 2.1 gezeigt, dass $f'(x,v) = f(x,v) + Delta$.
+
+Da $(x,u)$ und $(x,v)$ beide ausgehende Kanten sind und die einzigen
+veränderten Kanten inzident zu $x$ sind, gilt also:
+
+$ sum_(e in E^"out"_x) f'(e) = sum_(e in E^"out"_x) f(e) - Delta + Delta = sum_(e
+in E^"out"_x) f(e). $
+
+Da es keine Flussänderung durch $P$ bei eingehenden Kanten gibt, gilt somit:
+
+$ sum_(e in E^"in"_x) f'(e) = sum_(e in E^"in"_x) f(e) = sum_(e in E^"out"_x)
+f(e) = sum_(e in E^"out"_x) f'(e). $
+
+Somit ist für beliebige Zwischenknoten gezeigt, dass in allen Fällen dessen
+eingehender Fluss dessen ausgehendem Fluss entspricht. Die Flusserhaltung ist
+damit gezeigt. #qed
