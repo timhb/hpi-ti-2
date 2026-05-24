@@ -93,12 +93,18 @@ müssen nicht minimal sein.
   + (1 Punkt) $a$
 
     *Lösung:*
+    #image("6.3.a.png", width: 10em)
+    Nach der Definition von RA gilt: $L({a}) = {a}$. Der Automat nimmt eindeutig nur das Wort $w = {a}$ an. Jedes andere Symbol würde sofort in den $emptyset$-Zustand kommen, sowie jedes weitere Symbol in $w$ außer das eine $a$. Somit ist er identisch zu $a$.
 
   + (2 Punkte) $r + s$
 
     *Lösung:*
+    #image("6.3.b.png", width: 15em)
+    Nach der Definition von RA gilt: $L(r + s) = L(r) union L(s)$. Der Automat läuft durch $epsilon$-Übergang beide Blöcke für $r$ und $s$ durch. Kommt einer der beiden Blöcke in einen akzeptierenden Zustand, so ist der 
+    Automat durch $epsilon$-Übergang auch in einem akzeptierenden Zustand. Ist dies nicht der Fall, kann der Automat auch nicht in einen akzeptierenden Zustand kommen. Somit ist er identisch zu $r + s$.
 
   + (2 Punkte) $r^*$
 
     *Lösung:*
-
+    #image("6.3.c.png", width: 15em)
+    Nach der Definition von RA gilt: $L(r^*) = L(r)^*$. Der Automat akzeptiert ${epsilon}$, da der Startzustand bereits ein akzeptierender Zustand ist. Desweiteren kann er per $epsilon$-Übergang beliebig oft $r$ durchlaufen und per erneuten $epsilon$-Übergang dies beliebig oft wiederholen. Nur wenn es eine abzählbare Anzahl an $r$ in $w$ gibt, akzeptiert der Automat also $w$. Somit ist er identisch zu $r^*$.
