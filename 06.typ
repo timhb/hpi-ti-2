@@ -80,6 +80,18 @@ sind, indem du jeweils einen DEA angibst, der die Sprache akzeptiert.
     (Das niedrigste Bit steht dabei ganz rechts, das höchste Bit ganz links. Führende 0en sind erlaubt. Das leere Wort $epsilon$ ist durch 5 teilbar.)
 
     *Lösung:*
+    Sei $n in NN$. Aus 
+    $ 2^0 mod 5 = 1 $
+    $ 2^1 mod 5 = 2 $
+    $ 2^2 mod 5 = 4 $
+    $ 2^3 mod 5 = 3 $
+    $ 2^4 mod 5 = 1 $
+    wissen wir, dass jede $4n$-te Binärstelle (von rechts gelesen, mit 0 indiziert) die finale Zahl um $1$ im Modulo 5, erhöht. Bei $1 + 4n$ um $2$, $2 + 4n$ um $4$ und bei $3 + 4n$ um 3. \
+    Unser DEA wird also 4 verschiedene Zustände sich merken müssen. Am Ende wollen wir wissen, ob unsere finale Zahl Modulo 5 gleich 0 ergibt, also durch 5 teilbar ist. Dabei wissen wir, dass jede gelesene 0 das finale Modulo 5 nicht verändert und jede gelesene 1 jeweils für unser aktuelles Modulo es um eine bestimmte Anzahl erhöht, je nachdem an welcher Stelle es steht. Wir bekommen also folgenden DEA, wobei dies nur eine Skizze ist mit folgenden Beschränkungen, die lediglich der Darstellung dienen: die obere und untere Zeile sind dieselben Zustände, der linke und der rechte "DEA" bilden gemeinsam einen DEA. 
+    #image("assets/6.2.c.png", width: 20em)
+    Dabei ist jeder Zustand 0 (die genaue Benennung wurde hier als nicht notwendig betrachtet) ein akzeptierender Zustand des DEAs. Allerdings funktioniert dies nur, wenn das Wort $w$ von rechts nach links eingelesen wird, es wird aber von links nach rechts eingelesen. \
+    Wir drehen also zuerst alle Pfeile um, da wir ja jetzt immer den aktuellen Index der Binärzahl um 1 verringern mit jedem Schritt, statt ihn zu erhöhen. Wir können allerdings auch nicht wissen um welchen Index es sich denn gerade handelt, wenn wir das Wort $w$ einlesen. Wir müssen also von allen möglichen zu Beginn ausgehen und somit mit mehreren Startzustände in allen Ebenen bei 0 starten. Erst am Ende, wenn wir das Wort eingelesen haben, können wir uns sicher sein um welchen es sich zu Beginn gehandelt hat. Für uns ist also nur die oberste/unterste Zeile relevant, da wenn wir in dieser enden wissen, dass der "Pfad" der dorthin geführt hat an der richtigen Stelle begonnen hat. Finaler Endzustand wird also die 0 in der obersten/untersten Zeile. Alle anderen werden abgelehnt. Nun wäre der Potenzautomat des aktuell beschriebenen NEAs der gesuchte DEA.
+    #image("assets/6.2.c2.png", width: 20em)
 
 #pagebreak()
 #exercise[5 Punkte, Knobelaufgabe][] 
