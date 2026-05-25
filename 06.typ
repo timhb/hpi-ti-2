@@ -38,11 +38,15 @@ Gib einen regulären Ausdruck für die folgenden Sprachen über dem Alphabet $Si
 
     *Lösung:*
 
+    Da nicht nach Zahlen gefragt wurde, gehen wir von Ziffernfolgen aus und akzeptieren führende Nullen.
+
     $L_3 = (0+1+2+3+4+5+6+8+9)^*$
 
   + (1 Punkt) $L_4 = {w | w " enthält die Ziffer 5 nicht genau einmal"}$, das heißt $L_4 = Sigma^* without {5, 15, dots, 54, 56, dots}$.
 
     *Lösung:*
+
+    Da nicht nach Zahlen gefragt wurde, gehen wir von Ziffernfolgen aus und akzeptieren führende Nullen.
 
     $D = (0+1+2+3+4+6+7+8+9)^*$\
     $L_4 = D + D 5 D 5 D$
@@ -51,11 +55,8 @@ Gib einen regulären Ausdruck für die folgenden Sprachen über dem Alphabet $Si
 
     *Lösung:*
 
-    $E = (0+4+8)$
-
-    $F = (&12+14+20+24+28+32+36+40+44+48+52+56+60+64+68+72+\
-    &76+80+84+88+92+96)$
-
+    $E = (0+4+8)$\
+    $F = (1+3+5+7+9)(2+6)+(2+4+6+8)(0+4+8)$\
     $L_5 = E+F+(A B^* (0+E)+F)$
 
 #pagebreak()
@@ -71,13 +72,32 @@ sind, indem du jeweils einen DEA angibst, der die Sprache akzeptiert.
   + (1 Punkt) $L_6 = {w in {0, 1}^* | w " enthält 010 als Teilwort"}$
 
     *Lösung:*
+    #image("assets/6.1.a.svg")
+
+    Die Zustände sagen aus, welcher Anteil des 010-Teilworts momentan
+    eingelesen wurde. Zu Beginn kann beliebig oft 1 gelesen werden. Der direkte
+    Weg erfolgt durch das gesuchte Teilwort 010, wonach man im akzeptierenden
+    Zustand $q_3$ endet. Da 010 kein Suffix sein muss, gibt es in $q_3$ eine
+    Schleife mit 0,1. Falls beim Einlesen von der gesuchten Symbolfolge
+    abgewichen wird, gibt es Übergänge in Zustände, die nach dem Symbol
+    vorliegen (z.B. bei 11 zurück nach $q_0$).
 
   + (2 Punkte) $L_7 = {w in {0, 1}^* | w " enthält höchstens zwei 1en"}$
 
     *Lösung:*
+    #image("assets/6.1.b.svg")
+
+    Die Zustände sagen aus, wie oft bereits 1 eingelesen wurde. An jedem
+    Zustand gibt es eine Schleife mit 0, da diese nicht für das Akzeptieren
+    relevant sind. $q_0$, $q_1$ und $q_2$ sind akzeptierend, bei $q_3$ wurde
+    bereits mehr als zweimal 1 eingelesen, daher wird in diesem Zustand nicht
+    akzeptiert und es gibt eine Schleife für 0,1.
+
+    #colbreak()
 
   + (2 Punkte) $L_8 = {w in {0, 1}^* | w " als Binärzahl aufgefasst ist durch 5 teilbar"}$ \
-    (Das niedrigste Bit steht dabei ganz rechts, das höchste Bit ganz links. Führende 0en sind erlaubt. Das leere Wort $epsilon$ ist durch 5 teilbar.)
+    (Das niedrigste Bit steht dabei ganz rechts, das höchste Bit ganz links.
+    Führende 0en sind erlaubt. Das leere Wort $epsilon$ ist durch 5 teilbar.)
 
     *Lösung:*
     Sei $n in NN$. Aus 
@@ -86,11 +106,37 @@ sind, indem du jeweils einen DEA angibst, der die Sprache akzeptiert.
     $ 2^2 mod 5 = 4 $
     $ 2^3 mod 5 = 3 $
     $ 2^4 mod 5 = 1 $
-    wissen wir, dass jede $4n$-te Binärstelle (von rechts gelesen, mit 0 indiziert) die finale Zahl um $1$ im Modulo 5, erhöht. Bei $1 + 4n$ um $2$, $2 + 4n$ um $4$ und bei $3 + 4n$ um 3. \
-    Unser DEA wird also 4 verschiedene Zustände sich merken müssen. Am Ende wollen wir wissen, ob unsere finale Zahl Modulo 5 gleich 0 ergibt, also durch 5 teilbar ist. Dabei wissen wir, dass jede gelesene 0 das finale Modulo 5 nicht verändert und jede gelesene 1 jeweils für unser aktuelles Modulo es um eine bestimmte Anzahl erhöht, je nachdem an welcher Stelle es steht. Wir bekommen also folgenden DEA, wobei dies nur eine Skizze ist mit folgenden Beschränkungen, die lediglich der Darstellung dienen: die obere und untere Zeile sind dieselben Zustände, der linke und der rechte "DEA" bilden gemeinsam einen DEA. 
+    wissen wir, dass jede $4n$-te Binärstelle (von rechts gelesen, mit 0
+    indiziert) die finale Zahl um $1$ im Modulo 5, erhöht. Bei $1 + 4n$ um $2$,
+    $2 + 4n$ um $4$ und bei $3 + 4n$ um 3. \ Unser DEA wird also 4 verschiedene
+    Zustände sich merken müssen. Am Ende wollen wir wissen, ob unsere finale
+    Zahl Modulo 5 gleich 0 ergibt, also durch 5 teilbar ist. Dabei wissen wir,
+    dass jede gelesene 0 das finale Modulo 5 nicht verändert und jede gelesene
+    1 jeweils für unser aktuelles Modulo es um eine bestimmte Anzahl erhöht, je
+    nachdem an welcher Stelle es steht. Wir bekommen also folgenden DEA, wobei
+    dies nur eine Skizze ist mit folgenden Beschränkungen, die lediglich der
+    Darstellung dienen: die obere und untere Zeile sind dieselben Zustände, der
+    linke und der rechte "DEA" bilden gemeinsam einen DEA. 
     #image("assets/6.2.c.png", width: 20em)
-    Dabei ist jeder Zustand 0 (die genaue Benennung wurde hier als nicht notwendig betrachtet) ein akzeptierender Zustand des DEAs. Allerdings funktioniert dies nur, wenn das Wort $w$ von rechts nach links eingelesen wird, es wird aber von links nach rechts eingelesen. \
-    Wir drehen also zuerst alle Pfeile um, da wir ja jetzt immer den aktuellen Index der Binärzahl um 1 verringern mit jedem Schritt, statt ihn zu erhöhen. Wir können allerdings auch nicht wissen um welchen Index es sich denn gerade handelt, wenn wir das Wort $w$ einlesen. Wir müssen also von allen möglichen zu Beginn ausgehen und somit mit mehreren Startzustände in allen Ebenen bei 0 starten. Erst am Ende, wenn wir das Wort eingelesen haben, können wir uns sicher sein um welchen es sich zu Beginn gehandelt hat. Für uns ist also nur die oberste/unterste Zeile relevant, da wenn wir in dieser enden wissen, dass der "Pfad" der dorthin geführt hat an der richtigen Stelle begonnen hat. Finaler Endzustand wird also die 0 in der obersten/untersten Zeile. Alle anderen werden abgelehnt. Nun wäre der Potenzautomat des aktuell beschriebenen NEAs der gesuchte DEA.
+
+    #colbreak()
+
+    Dabei ist jeder Zustand 0 (die genaue Benennung wurde hier als nicht
+    notwendig betrachtet) ein akzeptierender Zustand des DEAs. Allerdings
+    funktioniert dies nur, wenn das Wort $w$ von rechts nach links eingelesen
+    wird, es wird aber von links nach rechts eingelesen. \ Wir drehen also
+    zuerst alle Pfeile um, da wir ja jetzt immer den aktuellen Index der
+    Binärzahl um 1 verringern mit jedem Schritt, statt ihn zu erhöhen. Wir
+    können allerdings auch nicht wissen um welchen Index es sich denn gerade
+    handelt, wenn wir das Wort $w$ einlesen. Wir müssen also von allen
+    möglichen zu Beginn ausgehen und somit mit mehreren Startzustände in allen
+    Ebenen bei 0 starten. Erst am Ende, wenn wir das Wort eingelesen haben,
+    können wir uns sicher sein um welchen es sich zu Beginn gehandelt hat. Für
+    uns ist also nur die oberste/unterste Zeile relevant, da wenn wir in dieser
+    enden wissen, dass der "Pfad" der dorthin geführt hat an der richtigen
+    Stelle begonnen hat. Finaler Endzustand wird also die 0 in der
+    obersten/untersten Zeile. Alle anderen werden abgelehnt. Nun wäre der
+    Potenzautomat des aktuell beschriebenen NEAs der gesuchte DEA.
     #image("assets/6.2.c2.png", width: 20em)
 
 #pagebreak()
@@ -105,18 +151,30 @@ müssen nicht minimal sein.
   + (1 Punkt) $a$
 
     *Lösung:*
-    #image("6.3.a.png", width: 10em)
-    Nach der Definition von RA gilt: $L({a}) = {a}$. Der Automat nimmt eindeutig nur das Wort $w = {a}$ an. Jedes andere Symbol würde sofort in den $emptyset$-Zustand kommen, sowie jedes weitere Symbol in $w$ außer das eine $a$. Somit ist er identisch zu $a$.
+    #image("assets/6.3.a.png", width: 10em)
+    Nach der Definition von RA gilt: $L({a}) = {a}$. Der Automat nimmt
+    eindeutig nur das Wort $w = {a}$ an. Jedes andere Symbol würde sofort in
+    den $emptyset$-Zustand kommen, sowie jedes weitere Symbol in $w$ außer das
+    eine $a$. Somit ist er identisch zu $a$.
 
   + (2 Punkte) $r + s$
 
     *Lösung:*
-    #image("6.3.b.png", width: 15em)
-    Nach der Definition von RA gilt: $L(r + s) = L(r) union L(s)$. Der Automat läuft durch $epsilon$-Übergang beide Blöcke für $r$ und $s$ durch. Kommt einer der beiden Blöcke in einen akzeptierenden Zustand, so ist der 
-    Automat durch $epsilon$-Übergang auch in einem akzeptierenden Zustand. Ist dies nicht der Fall, kann der Automat auch nicht in einen akzeptierenden Zustand kommen. Somit ist er identisch zu $r + s$.
+    #image("assets/6.3.b.png", width: 15em)
+    Nach der Definition von RA gilt: $L(r + s) = L(r) union L(s)$. Der Automat
+    läuft durch $epsilon$-Übergang beide Blöcke für $r$ und $s$ durch. Kommt
+    einer der beiden Blöcke in einen akzeptierenden Zustand, so ist der Automat
+    durch $epsilon$-Übergang auch in einem akzeptierenden Zustand. Ist dies
+    nicht der Fall, kann der Automat auch nicht in einen akzeptierenden Zustand
+    kommen. Somit ist er identisch zu $r + s$.
 
   + (2 Punkte) $r^*$
 
     *Lösung:*
-    #image("6.3.c.png", width: 15em)
-    Nach der Definition von RA gilt: $L(r^*) = L(r)^*$. Der Automat akzeptiert ${epsilon}$, da der Startzustand bereits ein akzeptierender Zustand ist. Desweiteren kann er per $epsilon$-Übergang beliebig oft $r$ durchlaufen und per erneuten $epsilon$-Übergang dies beliebig oft wiederholen. Nur wenn es eine abzählbare Anzahl an $r$ in $w$ gibt, akzeptiert der Automat also $w$. Somit ist er identisch zu $r^*$.
+    #image("assets/6.3.c.png", width: 15em)
+    Nach der Definition von RA gilt: $L(r^*) = L(r)^*$. Der Automat akzeptiert
+    ${epsilon}$, da der Startzustand bereits ein akzeptierender Zustand ist.
+    Desweiteren kann er per $epsilon$-Übergang beliebig oft $r$ durchlaufen und
+    per erneuten $epsilon$-Übergang dies beliebig oft wiederholen. Nur wenn es
+    eine abzählbare Anzahl an $r$ in $w$ gibt, akzeptiert der Automat also $w$.
+    Somit ist er identisch zu $r^*$.
