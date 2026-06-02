@@ -4,7 +4,7 @@
 #set text(lang: "de", font: "CMU Serif")
 
 #show: template.with(
-  names: [Tim Beier, Simon Bachran, Sven Luca Hafemann],
+  names: [Simon Bachran, Sven Hafemann, Tim Beier],
   name: "Bonusblatt",
   number: 3,
   course: "Theoretische Informatik II"
