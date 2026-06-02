@@ -1,11 +1,21 @@
+#import "@preview/cetz:0.5.1": *
+#import "@preview/fletcher:0.5.8" as fletcher: diagram, node, edge
+
 #let VSPACE = 1em
 #let HSPACE = 1em
 
 #let exercise_counter = counter("exercise")
 
 #let exercise_ex(name, in_parens, content) = block[
-    *#name* (#in_parens) \
+    #text(weight: 550)[#name] #if (in_parens.has("text")) [(#in_parens)]\
+
+    #pad(left: HSPACE, top: 0em, content)
+    #v(VSPACE)
 ]
+
+#let circ = $" " circle.small " "$
+#let qed = h(1fr) + $square$
+#let nullv = $underline(0)$
 
 #let exercise(in_parens, content) = [
     #exercise_counter.step()
@@ -22,9 +32,10 @@
 #let template(
   document,
   names: none,
-  week: 1,
+  name: none,
+  number: 1,
   group: none,
-  course: [Theoretische Informatik I],
+  course: [Theoretische Informatik II],
   semester: [Sommersemester 2026],
 ) = {
   set par(justify: true)
@@ -44,7 +55,7 @@
       #if here().page() != 1 [
         #course
         #h(1fr)
-        Übungsblatt #week – #course
+        #name #number
         // #datetime.today().display("[day].[month].[year]")
         // #h(1fr)
         #v(-.5em)
@@ -56,7 +67,7 @@
 
   align(center, rect(inset:   1em)[
     #names #h(1fr) #semester \
-    #align(center)[#text(size: 20pt, weight: 600)[Übungsblatt #week - #course]]
+    #align(center)[#text(size: 20pt, weight: 600)[#name #number - #course]]
     #v(1em)
   ])
 
@@ -64,3 +75,4 @@
 
   document
 }
+
