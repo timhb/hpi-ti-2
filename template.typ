@@ -1,5 +1,5 @@
 #import "@preview/cetz:0.5.1": *
-#import "@preview/fletcher:0.5.8" as fletcher: diagram, node, edge
+#import "@preview/fletcher:0.5.8" as fletcher: *
 
 #let VSPACE = 1em
 #let HSPACE = 1em
