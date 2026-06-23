@@ -68,6 +68,51 @@
 ]
 
 #pagebreak()
-#exercise[ Punkte, ][]
+#exercise[6 Punkte, Knobelaufgabe][
+  //Sei $F$ eine VC-Instanz mit Graph $G=(V,E)$ und Vertex Cover $S subset.eq V$ der Größe $k$.
 
-#pagebreak()
+  //Wir definieren unsere Reduktion $f$ als Komplementbildung bezüglich der Knoten. $f(F)$ ist demnach
+  //$G$ mit $U = V \\ S$ und $k' >= |S|$.
+
+  //Es verbleibt zu zeigen, dass $f$ den Wahrheitswert der Instanz nicht verändert.
+
+  //Da $F$ eine Vertex Cover Instanz ist, gilt für alle ${u,v} in E$, dass $u in S$ oder $v in S$.
+
+  //Angenommen es gäbe ein $u in U$ (dem Komplement von $S$), für das es ${u,v} in E$
+
+  Es ist bekannt, dass $"IS" := {(G=(V,E), k) | exists U subset.eq V, |U| >= k: forall u,v in U:
+  {u,v} in.not E}$
+
+  Sei $F$ eine IS-Instanz mit dem Graphen $G=(V,E)$ und einer unabhängigen Menge $U subset.eq V$ der
+  Größe $k$.
+
+  Wir definieren unsere Reduktion $f$ als Komplementbildung bezüglich der Knoten. $f(F)$ ist demnach
+  eine Vertex-Cover-Instanz mit Graphen $G$ und $S = V \\ U$ wobei $k' >= |U|$. Die
+  Komplementbildung ist in Linearzeit durch Iteration über die Knoten, also insbesondere auch in
+  Polynomialzeit möglich.
+
+  "$->$":
+
+  Sei $F$ eine erfüllende IS-Instanz. Daher gilt für alle $u,v in U$, dass ${u,v} in.not E$.
+
+  Für alle ${a,b} in E$ muss daher gelten, dass $a in.not U$ oder $b in.not U$, also $a in S$ oder
+  $b in S$.
+
+  Somit ist $f(F)$ eine erfüllende VC-Instanz.
+
+  "$<-$":
+
+  Sei $f(F)$ eine erfüllende VC-Instanz. Daher gilt für alle ${u,v} in E$, dass $u in S$ oder $v in
+  S$.
+
+  Angenommen es gäbe $a,b in U$, sodass ${a,b} in E$. Dann würde auch gelten $a,b in.not S$. Die
+  Kante ${a,b} in E$ wäre somit nicht Teil der erfüllenden VC-Instanz $f(F)$, was ein Widerspruch
+  zur Annahme ist.
+
+  Für alle $a,b in U$ gilt also, dass ${a,b} in.not E$. Somit ist $F$ eine erfüllende IS-Instanz.
+
+  Es ist gezeigt, dass $F$ genau dann erfüllbar ist, wenn $f(F)$ erfüllbar ist.
+
+  Wir haben also eine Polynomialzeitreduktion von IS auf VC gefunden. Da IS NP-Vollständig ist, gilt
+  dies somit auch für VC.
+]
