@@ -13,6 +13,7 @@
 #show: template.with(
   names: [Simon Bachran, Sven Hafemann, Tim Beier],
   number: week,
+  name: "Übungsblatt",
   course: "Theoretische Informatik II",
 )
 
